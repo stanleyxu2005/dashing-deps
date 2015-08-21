@@ -1,2 +1,3 @@
 # dashing-deps
-Dependencies and recommendations for dashing project
+
+Pre-build resources and libraries for project Dashing.

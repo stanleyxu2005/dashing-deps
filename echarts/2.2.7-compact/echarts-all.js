@@ -9143,7 +9143,11 @@ define('zrender/zrender', [
         }
         event = event || window.event;
         var target = event.toElement || event.relatedTarget || event.srcElement || event.target;
-        return target && target.className && target.className.match(config.elementClassName);
+        try {
+            return target.className.match(config.elementClassName);
+        } catch (ex) {
+            return false;
+        }
     };
     var domHandlers = {
         resize: function (event) {

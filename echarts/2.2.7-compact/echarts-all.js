@@ -9143,7 +9143,7 @@ define('zrender/zrender', [
         }
         event = event || window.event;
         var target = event.toElement || event.relatedTarget || event.srcElement || event.target;
-        return target && target.className.match(config.elementClassName);
+        return target && target.className && target.className.match(config.elementClassName);
     };
     var domHandlers = {
         resize: function (event) {
@@ -9636,8 +9636,10 @@ define('zrender/zrender', [
                 p = p.parent;
             }
             if (this._lastHover != shape) {
-                this._processOutShape(event);
-                this._processDragLeave(event);
+                if (this._lastHover && this.storage.get(this._lastHover.id)) {
+                    this._processOutShape(event);
+                    this._processDragLeave(event);
+                }
                 this._lastHover = shape;
                 this._processDragEnter(event);
             }

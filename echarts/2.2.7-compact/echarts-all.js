@@ -1052,6 +1052,35 @@ define('echarts/echarts', [
             this._messageCenterOutSide.unbind(eventName, eventListener);
             return this;
         },
+        group: function (groupId) {
+            var connect = true;
+            this._groupOperation(groupId, connect);
+        },
+        ungroup: function (groupId) {
+            var connect = true;
+            this._groupOperation(groupId, !connect);
+        },
+        _groupOperation: function (groupId, connect) {
+            var charts = [];
+            Object.keys(_instances).forEach(function (key) {
+                var chart = _instances[key];
+                if (chart.hasOwnProperty('groupId') && chart.groupId === groupId) {
+                    charts.push(chart);
+                }
+            });
+            charts.forEach(function (self) {
+                var associates = charts.filter(function (chart) {
+                    return chart !== self;
+                });
+                if (associates.length) {
+                    if (connect) {
+                        self.connect(associates);
+                    } else {
+                        self.disConnect(associates);
+                    }
+                }
+            });
+        },
         connect: function (connectTarget) {
             if (!connectTarget) {
                 return this;

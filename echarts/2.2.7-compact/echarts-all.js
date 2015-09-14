@@ -1052,31 +1052,33 @@ define('echarts/echarts', [
             this._messageCenterOutSide.unbind(eventName, eventListener);
             return this;
         },
-        group: function (groupId) {
-            var connect = true;
-            this._groupOperation(groupId, connect);
+        group: function () {
+            if (typeof this.groupId === 'string' && this.groupId.length) {
+                this._groupOperation(this.groupId, true);
+            }
         },
         ungroup: function (groupId) {
-            var connect = true;
-            this._groupOperation(groupId, !connect);
+            if (typeof this.groupId === 'string' && this.groupId.length) {
+                this._groupOperation(this.groupId, false);
+            }
         },
         _groupOperation: function (groupId, connect) {
             var charts = [];
             Object.keys(_instances).forEach(function (key) {
                 var chart = _instances[key];
-                if (chart.hasOwnProperty('groupId') && chart.groupId === groupId) {
+                if (chart.groupId === groupId) {
                     charts.push(chart);
                 }
             });
-            charts.forEach(function (self) {
-                var associates = charts.filter(function (chart) {
-                    return chart !== self;
+            charts.forEach(function (chart) {
+                var associates = charts.filter(function (another) {
+                    return chart !== another;
                 });
                 if (associates.length) {
                     if (connect) {
-                        self.connect(associates);
+                        chart.connect(associates);
                     } else {
-                        self.disConnect(associates);
+                        chart.disConnect(associates);
                     }
                 }
             });

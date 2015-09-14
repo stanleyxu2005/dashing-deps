@@ -1,7 +1,7 @@
 # CHANGELOG
 
-## 0.0.7
-* Echarts: repack the patch for grouping/ungrouping support (echarts#1434)
+## 0.0.8
+* Echarts: repack the patch for grouping/ungrouping support, which will only accept valid string group-id (echarts#1434)
 
 ## 0.0.6
 * Echarts: better grouping/ungrouping support (echarts#1434)

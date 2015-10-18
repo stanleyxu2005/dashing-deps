@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.0.9
+* Echarts: included scatter and k chart types
+
 ## 0.0.8
 * Echarts: repack the patch for grouping/ungrouping support, which will only accept valid string group-id (echarts#1434)
 

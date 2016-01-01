@@ -1020,7 +1020,9 @@ define('echarts/echarts', [
                     style: {
                         x: imgList[c].left - minLeft,
                         y: imgList[c].top - minTop,
-                        image: imgList[c].img
+                        image: imgList[c].img,
+                        width: imgList[c].right - imgList[c].left,
+                        height: imgList[c].bottom - imgList[c].top
                     }
                 }));
             }
@@ -3390,6 +3392,7 @@ define('zrender/zrender', [
         self._onglobalout = function (param) {
             return self.__onglobalout(param);
         };
+        self.dom.onmouseout = self._onglobalout;
         this.zr.on(zrConfig.EVENT.MOUSEMOVE, self._onmousemove);
         this.zr.on(zrConfig.EVENT.GLOBALOUT, self._onglobalout);
         self._hide = function (param) {
@@ -4367,6 +4370,29 @@ define('zrender/zrender', [
                 case ecConfig.CHART_TYPE_LINE:
                 case ecConfig.CHART_TYPE_BAR:
                 case ecConfig.CHART_TYPE_K:
+                    if (this.component.grid == null || serie.data.length <= dataIndex) {
+                        return;
+                    }
+                    var xAxis = this.component.xAxis.getAxis(serie.xAxisIndex);
+                    var yAxis = this.component.yAxis.getAxis(serie.yAxisIndex);
+                    var x;
+                    var y;
+                    var val = serie.data[dataIndex].value == null ? serie.data[dataIndex] : serie.data[dataIndex].value;
+                    if (xAxis.type === 'categoryAxis') {
+                        x = xAxis.getCoordByIndex(dataIndex);
+                        y = yAxis.getCoord(val);
+                    } else if (yAxis.type === 'categoryAxis') {
+                        y = yAxis.getCoordByIndex(dataIndex);
+                        x = xAxis.getCoord(val);
+                    } else {
+                        return;
+                    }
+                    this._event = {
+                        zrenderX: x,
+                        zrenderY: y
+                    };
+                    this._showAxisTrigger(serie.xAxisIndex, serie.yAxisIndex, dataIndex);
+                    break;
                 case ecConfig.CHART_TYPE_RADAR:
                     if (this.component.polar == null || serie.data[0].value.length <= dataIndex) {
                         return;
@@ -4465,6 +4491,32 @@ define('zrender/zrender', [
                         }
                     }
                     break;
+                case ecConfig.CHART_TYPE_EVENTRIVER:
+                    var name = params.name;
+                    for (var i = 0, l = shapeList.length; i < l; i++) {
+                        if (shapeList[i].type === 'polygon' && ecData.get(shapeList[i], 'name') == name) {
+                            this._curTarget = shapeList[i];
+                            var pointList = shapeList[i].style.pointList;
+                            var p = pointList[0];
+                            if (p) {
+                                var left = p[0];
+                                var right = p[0];
+                                var top = p[1];
+                                var bottom = p[1];
+                                var i;
+                                for (i = 1; i < pointList.length; i++) {
+                                    p = pointList[i];
+                                    left = Math.min(left, p[0]);
+                                    right = Math.max(right, p[0]);
+                                    top = Math.min(top, p[1]);
+                                    bottom = Math.max(bottom, p[1]);
+                                }
+                                x = (left + right) / 2;
+                                y = (top + bottom) / 2;
+                            }
+                            break;
+                        }
+                    }
                 }
                 if (x != null && y != null) {
                     this._event = {

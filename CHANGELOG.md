@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.0
+* Echarts: merged changes from upstream/master
+* Echarts: will hide tooltip when mouse moveout of chart control (echarts#1831)
+
 ## 0.0.9
 * Echarts: included scatter and k chart types
 

@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.1.1
+* Echarts: merged changes from upstream/master which fixs tooltip issue better (echarts#1831)
+
 ## 0.1.0
 * Echarts: merged changes from upstream/master
 * Echarts: will hide tooltip when mouse moveout of chart control (echarts#1831)

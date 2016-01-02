@@ -3392,7 +3392,6 @@ define('zrender/zrender', [
         self._onglobalout = function (param) {
             return self.__onglobalout(param);
         };
-        self.dom.onmouseout = self._onglobalout;
         this.zr.on(zrConfig.EVENT.MOUSEMOVE, self._onmousemove);
         this.zr.on(zrConfig.EVENT.GLOBALOUT, self._onglobalout);
         self._hide = function (param) {
@@ -9360,9 +9359,6 @@ define('zrender/zrender', [
             }
         },
         mouseout: function (event, manually) {
-            if (!isZRenderElement(event) && !manually) {
-                return;
-            }
             event = this._zrenderEventFixed(event);
             var element = event.toElement || event.relatedTarget;
             if (element != this.root) {

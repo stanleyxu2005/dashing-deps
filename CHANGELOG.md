@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.1.2
+*Sorry the previous version was not published to npm correctly*
+
 ## 0.1.1
 * Echarts: merged changes from upstream/master which fixs tooltip issue better (echarts#1831)
 

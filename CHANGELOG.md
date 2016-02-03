@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.1.3
+* Octicons: included this totally open source font library, which is recommended by bootstrap 4. also because webjar system cannot parse a license notation "(OFL and MIT)". their system only accepts ["OFL", "MIT"].
+
 ## 0.1.2
 *Sorry the previous version was not published to npm correctly*
 

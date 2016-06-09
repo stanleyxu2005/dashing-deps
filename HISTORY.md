@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## 0.1.4
-*Decided not to include octicons, as it might impact production code.*
+*Decided not to include octicons, because dashing does not support bootstrap 4.*
 
 ## 0.1.3
 * Octicons: included this totally open source font library, which is recommended by bootstrap 4. also because webjar system cannot parse a license notation "(OFL and MIT)". their system only accepts ["OFL", "MIT"].
